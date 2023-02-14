@@ -16,7 +16,7 @@ async function handleRequest(request) {
   const payload = await request.json();
   var account_manager = await getAccountManager(payload.organization);
   var follower = await updateFollower(payload.ticket,account_manager);
-  return new Response('Follower Added');
+  return new Response(JSON.stringify(follower));
 }
       
 async function getAccountManager(organization_id){
@@ -41,7 +41,7 @@ async function updateFollower(ticket_id,account_manager){
   var body = {
     "ticket": {
       "followers": [
-        { "user_id": account_manager+2, "action": "put" }
+        { "user_id": account_manager, "action": "put" }
       ]
     }
   }
