@@ -1,6 +1,7 @@
 const subdomain = 'internalnote' //your Zendesk subdomain
 const auth = 'abc123def456xyz789=' //Base64 Encode admin@company.com/token:{token}
 
+//The startpoint of the worker that listens for POST events or gives an error
 addEventListener('fetch', event => {
   const { request } = event;
   const { url } = request;
@@ -12,10 +13,18 @@ addEventListener('fetch', event => {
   }
 });
 
+
 async function handleRequest(request) {
+  //Get the POST payload in JSON parsed format
   const payload = await request.json();
+  
+  //Get the ID of the account manager
   var account_manager = await getAccountManager(payload.organization);
+  
+  //Set the account_manager as follower
   var follower = await updateFollower(payload.ticket,account_manager);
+  
+  //Return a status 200 with the updated ticket.
   return new Response(JSON.stringify(follower));
 }
       
