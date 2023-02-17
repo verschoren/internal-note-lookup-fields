@@ -50,7 +50,7 @@ async function updateFollower(ticket_id,account_manager){
   var body = {
     "ticket": {
       "followers": [
-        { "user_id": "1234567890", "action": "put" }
+        { "user_id": account_manager, "action": "put" }
       ],
       "comment": {
         "body": "You should take a look at this ticket.",
